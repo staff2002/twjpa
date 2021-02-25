@@ -1,0 +1,18 @@
+server:
+  port: 9091
+spring:
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    initial-size: 10
+    max-active: 50
+    max-wait: 1000
+    min-idle: 10
+    name: music
+    url: jdbc:mysql://localhost:3306/music?characterEncoding=UTF-8
+    username: root
+    password: root
+    validation-query: SELECT 1
+  jpa:
+    hibernate:
+      use-new-id-generator-mappings: false
+    show-sql: true
