@@ -1,11 +1,14 @@
 package com.tw.twjpa.controller;
 
 import com.tw.twjpa.mapper.AlbumMapper;
+import com.tw.twjpa.model.Album;
 import com.tw.twjpa.repository.AlbumRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
@@ -17,5 +20,16 @@ public class AlbumController {
     @RequestMapping
     public Object findAll(){
         return albumRepository.findAll().stream().map(AlbumMapper.Album_MAPPER::toDTO).collect(Collectors.toList());
+    }
+
+    @RequestMapping("/{id}")
+    public Object findById(@PathVariable long id){
+        return AlbumMapper.Album_MAPPER.toDTO(albumRepository.findById(id).get());
+    }
+
+    @RequestMapping("/whole")
+    public Object findAllWhole(){
+        final List<Album> all = albumRepository.findAll();
+        return all;
     }
 }

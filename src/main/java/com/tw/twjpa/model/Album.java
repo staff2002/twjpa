@@ -19,6 +19,13 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "album")
+@NamedEntityGraph(
+        name = "album-entity-graph",
+        attributeNodes = {
+                @NamedAttributeNode("albumVersions"),
+                @NamedAttributeNode("artist"),
+        }
+)
 public class Album {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -32,15 +39,18 @@ public class Album {
     @ManyToOne(cascade = CascadeType.PERSIST,fetch = FetchType.EAGER)
     @JoinColumn(name = "artist_id")
     private Artist artist;
+
     @Temporal(TemporalType.DATE)
     private Date publishData;
+
     @CreationTimestamp
     private Date createdAt;
+
     @UpdateTimestamp
     private Date updatedAt;
 
-    @Fetch(FetchMode.SELECT)
-    @OneToMany(fetch = FetchType.LAZY)
+    @Fetch(FetchMode.JOIN)
+    @OneToMany(fetch = FetchType.EAGER)
     @JoinColumn(name = "album_id")
     List<AlbumVersion> albumVersions;
 }
