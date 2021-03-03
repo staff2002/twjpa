@@ -1,5 +1,7 @@
-package com.tw.twjpa.model;
+package com.tw.twjpa.model.onetomany;
 
+import com.tw.twjpa.model.Artist;
+import com.tw.twjpa.model.Company;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -19,14 +21,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "album")
-@NamedEntityGraph(
-        name = "album-entity-graph",
-        attributeNodes = {
-                @NamedAttributeNode("albumVersions"),
-                @NamedAttributeNode("artist"),
-        }
-)
-public class Album {
+public class AlbumOneToMany {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
@@ -54,19 +49,11 @@ public class Album {
     @Fetch(FetchMode.JOIN)
     @OneToMany(cascade = CascadeType.PERSIST,fetch = FetchType.EAGER)
     @JoinColumn(name = "album_id")
-    List<AlbumVersion> albumVersions;
+    List<AlbumVersionOneToMany> albumVersions;
 
     // 双向 mapped 配置方式
 //    @Fetch(FetchMode.JOIN)
 //    @OneToMany(cascade = CascadeType.PERSIST,fetch = FetchType.EAGER,mappedBy = "album")
 //    List<AlbumVersion> albumVersions;
-
-    @ManyToMany(cascade = CascadeType.PERSIST)
-    @JoinTable(
-            name = "album_tag_relation",
-            joinColumns = @JoinColumn(name = "album_id", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "tag_id", referencedColumnName = "id")
-    )
-    private List<Tag> tags;
 }
 

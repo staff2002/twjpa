@@ -3,6 +3,7 @@ package com.tw.twjpa.dto;
 import lombok.Data;
 
 import java.util.Date;
+import java.util.List;
 
 @Data
 public class AlbumDTO {
@@ -12,4 +13,5 @@ public class AlbumDTO {
     private String companyAddress;
     private String artistName;
     private Date publishData;
+    private List<AlbumVersionDTO> AlbumVersions;
 }

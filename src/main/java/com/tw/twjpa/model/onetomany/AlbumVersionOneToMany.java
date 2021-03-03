@@ -1,4 +1,4 @@
-package com.tw.twjpa.model;
+package com.tw.twjpa.model.onetomany;
 
 import com.tw.twjpa.enums.MediumType;
 import lombok.AllArgsConstructor;
@@ -6,13 +6,10 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.util.Date;
-import java.util.List;
 
 @Data
 @Entity
@@ -20,7 +17,7 @@ import java.util.List;
 @NoArgsConstructor
 @Builder
 @Table(name = "album_version")
-public class AlbumVersion {
+public class AlbumVersionOneToMany {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
@@ -28,7 +25,7 @@ public class AlbumVersion {
     //正确做法应该在一方设置mapped by
     @ManyToOne
     @JoinColumn(name = "album_id")
-    private Album album;
+    private AlbumOneToMany album;
 
     // 单向
 //    @Column(name="album_id")
@@ -45,8 +42,4 @@ public class AlbumVersion {
     @UpdateTimestamp
     private Date updatedAt;
 
-    @OneToMany
-    @Fetch(FetchMode.JOIN)
-    @JoinColumn(name = "record_version_id")
-    List<VersionImage> versionImages;
 }
