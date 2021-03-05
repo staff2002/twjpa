@@ -18,7 +18,6 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import java.util.Arrays;
 import java.util.Date;
 
-@ExtendWith(SpringExtension.class)
 @SpringBootTest
 public class JpaTest {
     @Autowired
@@ -53,11 +52,10 @@ public class JpaTest {
                 .albumPublishInfo(albumPublishInfo)
                 .artist(Artist.builder().id(1).build())
                 .company(Company.builder().companyAddress("a").companyName("b").build())
-                .name("范特西oneToOne")
+                .name("范特西oneToOne2")
                 .publishData(new Date())
                 .build();
-//        albumPublishInfo.setAlbum(album);
-
+        albumPublishInfo.setAlbum(album);
         albumOneToOneRepository.save(album);
     }
 }

@@ -1,4 +1,4 @@
-package com.tw.twjpa.model.onetoone;
+package com.tw.twjpa.model.manytomany;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -7,21 +7,16 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
+@Entity
 @Data
 @Builder
-@Entity
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "album_publish_info")
-public class AlbumPublishInfoOneToOne {
+@Table(name = "tag")
+public class TagManyToMany {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
-    //双向
-    @OneToOne
-    @JoinColumn(name= "album_id")
-    private AlbumOneToOne album;
-
-    private String publisher;
+    private String name;
 }

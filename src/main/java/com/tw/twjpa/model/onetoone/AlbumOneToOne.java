@@ -37,11 +37,8 @@ public class AlbumOneToOne {
     private Artist artist;
 
     //双向
-//    @OneToOne(cascade= CascadeType.PERSIST, mappedBy = "album")
-//    private AlbumPublishInfoOneToOne albumPublishInfo;
-
-    @OneToOne(cascade= CascadeType.PERSIST)
-    @JoinColumn(referencedColumnName = "album_id")
+    @OneToOne(cascade= CascadeType.PERSIST, mappedBy = "album")
+    //mappedBy含义：此处OneToOne的关系参见 AlbumPublishInfoOneToOne中的album属性上的关系定义。本对象不对关系进行维护。
     private AlbumPublishInfoOneToOne albumPublishInfo;
 
     @Temporal(TemporalType.DATE)

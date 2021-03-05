@@ -1,5 +1,6 @@
-package com.tw.twjpa.model.onetomany;
+package com.tw.twjpa.model.manytomany;
 
+import com.tw.twjpa.model.AlbumVersion;
 import com.tw.twjpa.model.Artist;
 import com.tw.twjpa.model.Company;
 import lombok.AllArgsConstructor;
@@ -21,7 +22,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "album")
-public class AlbumOneToMany {
+public class AlbumManyToMany {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
@@ -44,16 +45,12 @@ public class AlbumOneToMany {
     @UpdateTimestamp
     private Date updatedAt;
 
-    //单向 join column配置方式
-    //save时，不需要为多方设置关联album_id
-//    @Fetch(FetchMode.JOIN)
-//    @OneToMany(cascade = CascadeType.PERSIST,fetch = FetchType.EAGER)
-//    @JoinColumn(name = "album_id")
-//    List<AlbumVersionManyToOne> albumVersions;
-
-    // 双向 mapped 配置方式
-    @Fetch(FetchMode.JOIN)
-    @OneToMany(cascade = CascadeType.PERSIST,fetch = FetchType.EAGER,mappedBy = "album")
-    List<AlbumVersionManyToOne> albumVersions;
+    @ManyToMany(cascade = CascadeType.PERSIST)
+    @JoinTable(
+            name = "album_tag_relation",
+            joinColumns = @JoinColumn(name = "album_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "tag_id", referencedColumnName = "id")
+    )
+    private List<TagManyToMany> tags;
 }
 

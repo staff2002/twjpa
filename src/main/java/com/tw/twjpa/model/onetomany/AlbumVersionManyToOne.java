@@ -17,7 +17,7 @@ import java.util.Date;
 @NoArgsConstructor
 @Builder
 @Table(name = "album_version")
-public class AlbumVersionOneToMany {
+public class AlbumVersionManyToOne {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
