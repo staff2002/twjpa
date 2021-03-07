@@ -45,7 +45,7 @@ public class AlbumManyToMany {
     @UpdateTimestamp
     private Date updatedAt;
 
-    @ManyToMany(cascade = CascadeType.PERSIST)
+    @ManyToMany(cascade = {CascadeType.PERSIST,CascadeType.MERGE})
     @JoinTable(
             name = "album_tag_relation",
             joinColumns = @JoinColumn(name = "album_id", referencedColumnName = "id"),

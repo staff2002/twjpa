@@ -16,7 +16,7 @@ import javax.persistence.*;
 public class TagManyToMany {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+    private Long id;
 
     private String name;
 }

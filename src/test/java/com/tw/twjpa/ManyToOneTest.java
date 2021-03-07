@@ -8,7 +8,6 @@ import com.tw.twjpa.repository.AlbumOneToOneRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 
@@ -75,12 +74,13 @@ public class ManyToOneTest {
 
     //4、先查询，再修改artist name再保存
     //结果：修改级连保存成功
+    //分析：ManyToOne 默认急加载，不用加 Transactional 注解
     @Test
     public void get_then_modify_artist_save(){
-        AlbumOneToOne album = albumOneToOneRepository.findById(25L).get();
-        album.setName("范特西12");
+        AlbumOneToOne album = albumOneToOneRepository.findById(24L).get();
+        album.setName("范特西16");
         Artist artist = album.getArtist();
-        artist.setName("David Bowie");
+        artist.setName("David Bowie1");
         albumOneToOneRepository.save(album);
     }
 
