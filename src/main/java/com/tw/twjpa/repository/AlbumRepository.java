@@ -8,7 +8,7 @@ import java.util.List;
 
 
 public interface AlbumRepository extends JpaRepository<Album, Long> {
-    @EntityGraph("album-entity-graph")
+//    @EntityGraph("album-entity-graph")
     @Override
     List<Album> findAll();
 }

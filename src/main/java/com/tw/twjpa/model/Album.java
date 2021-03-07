@@ -49,19 +49,13 @@ public class Album {
     @UpdateTimestamp
     private Date updatedAt;
 
-    //单向 join column配置方式
-    //save时，不需要为多方设置关联album_id
+    //双向 mapped 配置方式
     @Fetch(FetchMode.JOIN)
-    @OneToMany(cascade = CascadeType.PERSIST,fetch = FetchType.EAGER)
-    @JoinColumn(name = "album_id")
+    @OneToMany(cascade = CascadeType.PERSIST,fetch = FetchType.EAGER,mappedBy = "album")
     List<AlbumVersion> albumVersions;
 
-    // 双向 mapped 配置方式
-//    @Fetch(FetchMode.JOIN)
-//    @OneToMany(cascade = CascadeType.PERSIST,fetch = FetchType.EAGER,mappedBy = "album")
-//    List<AlbumVersion> albumVersions;
-
-    @ManyToMany(cascade = CascadeType.PERSIST)
+    @Fetch(FetchMode.SUBSELECT)
+    @ManyToMany(cascade = CascadeType.PERSIST,fetch = FetchType.LAZY)
     @JoinTable(
             name = "album_tag_relation",
             joinColumns = @JoinColumn(name = "album_id", referencedColumnName = "id"),

@@ -29,28 +29,4 @@ public class AlbumController {
     public Object findById(@PathVariable long id){
         return AlbumMapper.Album_MAPPER.toDTO(albumRepository.findById(id).get());
     }
-
-    @RequestMapping("/whole")
-    public Object findAllWhole(){
-        final List<Album> all = albumRepository.findAll();
-        return all;
-    }
-
-    @RequestMapping("/add")
-    public void add(){
-        AlbumVersion albumVersion = AlbumVersion.builder().mediumType(MediumType.CD).versionName("首版").build();
-        Tag tag = Tag.builder().name("nice").build();
-        Album album = Album.builder()
-                 .albumVersions(Arrays.asList(albumVersion))
-                 .artist(Artist.builder().id(1).build())
-                 .company(Company.builder().companyAddress("a").companyName("b").build())
-                 .name("范特西2")
-                 .publishData(new Date())
-                .tags(Arrays.asList(tag)).build();
-
-//        albumVersion.setAlbumId(album.getId());
-        albumVersion.setAlbum(album);
-
-        albumRepository.save(album);
-    }
 }

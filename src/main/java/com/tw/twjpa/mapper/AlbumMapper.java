@@ -2,8 +2,10 @@ package com.tw.twjpa.mapper;
 
 import com.tw.twjpa.dto.AlbumDTO;
 import com.tw.twjpa.dto.AlbumVersionDTO;
+import com.tw.twjpa.dto.TagDTO;
 import com.tw.twjpa.model.Album;
 import com.tw.twjpa.model.AlbumVersion;
+import com.tw.twjpa.model.Tag;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
@@ -19,4 +21,5 @@ public interface AlbumMapper {
     AlbumDTO toDTO(Album album);
 
     AlbumVersionDTO toAlbumVersionDTO(AlbumVersion albumVersion);
+    TagDTO toTagDTO(Tag tag);
 }

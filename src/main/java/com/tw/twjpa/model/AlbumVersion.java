@@ -30,10 +30,6 @@ public class AlbumVersion {
     @JoinColumn(name = "album_id")
     private Album album;
 
-    // 单向
-//    @Column(name="album_id")
-//    private long albumId;
-
     private String versionName;
 
     @Enumerated(EnumType.STRING)
