@@ -54,6 +54,11 @@ public class Album {
     @OneToMany(cascade = CascadeType.PERSIST,fetch = FetchType.EAGER,mappedBy = "album")
     List<AlbumVersion> albumVersions;
 
+    //双向 mapped 配置方式
+    @Fetch(FetchMode.SUBSELECT)
+    @OneToMany(cascade = CascadeType.PERSIST,fetch = FetchType.LAZY,mappedBy = "album")
+    List<Track> tracks;
+
     @Fetch(FetchMode.SUBSELECT)
     @ManyToMany(cascade = CascadeType.PERSIST,fetch = FetchType.LAZY)
     @JoinTable(

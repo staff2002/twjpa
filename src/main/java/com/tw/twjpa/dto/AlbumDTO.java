@@ -14,5 +14,6 @@ public class AlbumDTO {
     private String artistName;
     private Date publishData;
     private List<AlbumVersionDTO> AlbumVersions;
+    private List<TrackDTO> tracks;
     private List<TagDTO> tags;
 }
