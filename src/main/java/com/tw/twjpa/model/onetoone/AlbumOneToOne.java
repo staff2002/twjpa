@@ -32,7 +32,7 @@ public class AlbumOneToOne {
     @Embedded
     private Company company;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "artist_id")
     private Artist artist;
 

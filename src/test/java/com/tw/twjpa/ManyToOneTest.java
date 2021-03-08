@@ -18,7 +18,9 @@ public class ManyToOneTest {
 
     //1、不设置 artist id，设置artist name
     //1.1 不设置级连，album 保存失败
+    //分析： 不设置级连，不会保存artist，但是album的artist_id不能为空，所以报错。
     //1.2 设置级连，album 保存成功，并且artist也会被保存
+    //分析：级连保存 artist ，album关联此新的artsit，保存成功
     @Test
     public void when_not_pass_artist_id(){
         AlbumPublishInfoOneToOne albumPublishInfo = AlbumPublishInfoOneToOne.builder().publisher("发行商1").build();
@@ -55,8 +57,9 @@ public class ManyToOneTest {
     }
 
     //3、设置artist id,name
-    //3.1 不设置级连,  保存album成功，不会更新id为1的artist，也不会报错。
-    //3.2 设置级连, 保存失败. 原因是 Artist 对象并没有被 JPA 托管，错误信息：detached entity passed to persist
+    //3.1 不设置级连,  保存album成功，不会更新id为1的artist的name，也不会报错。
+    //分析，不设置级连，仅会保存 album 的 artist_id属性
+    //3.2 设置级连, 保存失败. 原因是 Artist 对象并没有被 JPA 管理，错误信息：detached entity passed to persist
     @Test
     public void when_pass_artist_id_and_name(){
         AlbumPublishInfoOneToOne albumPublishInfo = AlbumPublishInfoOneToOne.builder().publisher("发行商1").build();
@@ -73,18 +76,18 @@ public class ManyToOneTest {
     }
 
     //4、先查询，再修改artist name再保存
-    //结果：修改级连保存成功
-    //分析：ManyToOne 默认急加载，不用加 Transactional 注解
+    //结果：修改级连保存成功, album和artist均被更新
+    //分析：查询后，album和artist都是persist状态。可以正常级连更新
     @Test
     public void get_then_modify_artist_save(){
-        AlbumOneToOne album = albumOneToOneRepository.findById(24L).get();
-        album.setName("范特西16");
+        AlbumOneToOne album = albumOneToOneRepository.findById(4L).get();
+        album.setName("范特西new");
         Artist artist = album.getArtist();
         artist.setName("David Bowie1");
         albumOneToOneRepository.save(album);
     }
 
-    //5、new 一个对象，设置id，设置属性。然后保存
+    //5、new 一个album对象，设置id，设置属性。然后保存。
     //结果：先查album，然后会进行更新
     //分析：save的实现中，判断有id时不为new状态，会进行merge。merge前会先查询再更新，类似git的pull，
     @Test
@@ -111,7 +114,7 @@ public class ManyToOneTest {
 
     /*结论：
     1、设置级连persist后，如果想保存级连对象，不要设置id。一旦设置id会被认为是detached entity。
-    2、顶级对象，设置 id 后 save 会进行 merge 操作。如果 id 有对应数据，那么 save 时会 update 此数据，否则 insert
-    3、级连删除时，ManyToOne不建议删除，原因是可能有其他多方关联了一方，会破坏数据完整性。
+    2、顶级实体对象，设置 id 后 save 会进行 merge 操作。如果 id 有对应数据，那么 save 时会 update 此数据，否则 insert
+    3、ManyToOne不建议设置级连删除，原因是可能有其他多方关联了一方，会破坏数据完整性。
     */
 }

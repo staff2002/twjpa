@@ -27,6 +27,7 @@ public class AlbumOneToManyService {
     public void delete_many(){
         AlbumOneToMany albumOneToMany = albumOneToManyRepository.findById(100L).get();
         AlbumVersionManyToOne deletedAlbumVersion = albumOneToMany.getAlbumVersions().get(0);
+        albumOneToMany.getAlbumVersions().remove(deletedAlbumVersion);
         albumVersionManyToOneRepository.delete(deletedAlbumVersion);
     }
 

@@ -43,14 +43,13 @@ public class AlbumOneToMany {
     @UpdateTimestamp
     private Date updatedAt;
 
-    //单向 join column配置方式
-    //save时，不需要为多方设置关联album_id
+    //join column配置方式
 //    @OneToMany(cascade = CascadeType.ALL)
 //    @JoinColumn(name = "album_id")
 //    List<AlbumVersionManyToOne> albumVersions;
 
     // 双向 mapped 配置方式
-    @OneToMany(cascade = {CascadeType.PERSIST,CascadeType.MERGE}, mappedBy = "album", fetch=FetchType.EAGER, orphanRemoval = true)
+    @OneToMany(cascade = {CascadeType.PERSIST,CascadeType.MERGE}, mappedBy = "album")
     List<AlbumVersionManyToOne> albumVersions;
 }
 
