@@ -24,7 +24,7 @@ public class QueryName {
     @Test
     void should_get_album_with_name_is_Ride_the_Lightning_and_company_name_is_Vertigo() {
         // Todo
-        Album album = null;
+        Album album = albumRepository.findByNameAndCompany_CompanyName("Ride the Lightning", "Vertigo");
 
         assertEquals("Ride the Lightning", album.getName());
         assertEquals("Vertigo", album.getCompany().getCompanyName());
@@ -36,7 +36,7 @@ public class QueryName {
         Date endDate = toDate(2021);
 
         // Todo
-        List<Album> albums = null;
+        List<Album> albums = albumRepository.findByPublishDataBetween(startDate, endDate);
 
         assertEquals(1, albums.size());
     }
@@ -45,7 +45,7 @@ public class QueryName {
     void should_get_album_with_id_greater_than_2() {
 
         // Todo
-        List<Album> albums = null;
+        List<Album> albums = albumRepository.findByIdGreaterThan(2L);
 
         assertEquals(1, albums.size());
     }
@@ -54,7 +54,7 @@ public class QueryName {
     void should_get_album_with_name_less_then_equals_Hotel_California() {
 
         // Todo
-        List<Album> albums = null;
+        List<Album> albums = albumRepository.findByNameLessThanEqual("Hotel California");
 
         assertEquals(2, albums.size());
     }
@@ -64,7 +64,7 @@ public class QueryName {
         Date date = toDate(1996);
 
         // Todo
-        List<Album> albums = null;
+        List<Album> albums = albumRepository.findByPublishDataBefore(date);
 
         assertEquals(2, albums.size());
     }
@@ -72,7 +72,7 @@ public class QueryName {
     @Test
     void should_get_first_album_with_name_start_with_ride() {
         // Todo
-        Album album = null;
+        Album album = albumRepository.findTop1ByNameStartingWith("ride");
 
         assertEquals("Ride the Lightning", album.getName());
     }
@@ -80,7 +80,7 @@ public class QueryName {
     @Test
     void should_get_first_album_with_name_like_ride() {
         // Todo
-        Album album = null;
+        Album album = albumRepository.getAlbumWithNameLike("Ride");
 
         assertEquals("Ride the Lightning", album.getName());
     }
@@ -88,7 +88,7 @@ public class QueryName {
     @Test
     void should_get_first_album_with_name_like_ride_native_query_is_true() {
         // Todo
-        Album album = null;
+        Album album = albumRepository.getAlbumWithNameLikeUseSql("Ride");
 
         assertEquals("Ride the Lightning", album.getName());
     }
